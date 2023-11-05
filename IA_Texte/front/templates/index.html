@@ -1,0 +1,12 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/front.css' %}">
+<h2>Forum</h2>
+<label for="comment"><h3>Commentaire</h3></label>
+{# <form id="formTest" action={% url 'moderation' %}> #}
+<textarea id="comment_field" name="comment"></textarea>
+<input id="validate" type="submit" placeholder="Send" data-api-url="{% url 'moderation' %}">
+{# </form> #}
+<div id="validation"></div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{% static 'js.js' %}">const route="{% url 'moderation' %}"</script>
