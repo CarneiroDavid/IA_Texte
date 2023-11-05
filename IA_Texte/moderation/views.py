@@ -3,8 +3,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from sklearn.feature_extraction.text import TfidfVectorizer
-from pandas import DataFrame
-import pandas as pd
+import spacy
 import pickle
 # Create your views here.
 
@@ -21,6 +20,10 @@ MODEL_ARRAY = [
 def getData(request):
     print('|||||||||||||||||||||||||||||||||||||||||||||||||||')
     comment = request.GET['comment']
+    nlp = spacy.load('en_core_web_sm')
+    treated_tokens = [w.text for w in nlp(comment, disable=["parser", "tagger", "ner", "textcat"]) if w.is_alpha and not w.is_stop]
+    
+    comment = " ".join(treated_tokens)
     result = []
     for model in MODEL_ARRAY:
         with open('../IA/model/'+model[1],'rb') as model_file:
